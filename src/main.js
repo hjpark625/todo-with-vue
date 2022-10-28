@@ -9,7 +9,7 @@ import router from './router';
 
 library.add(fas, far, fab);
 
-const app = createApp(App).use(router).mount('#app');
+const app = createApp(App);
 
 app.use(router);
 app.component('font-awesome-icon', FontAwesomeIcon);
