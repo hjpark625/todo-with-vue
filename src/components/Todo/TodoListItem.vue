@@ -1,5 +1,15 @@
 <template>
   <div class="todo-list-item-wrapper">
+    <form v-show="isEdit" class="edit-form" @submit.prevent="onEditTodo">
+      <input
+        type="text"
+        class="edit-input"
+        v-model="editText"
+        :placeholder="todo.text"
+        ref="editInput"
+      />
+    </form>
+
     <div class="checkbox" @click="onCheckTodo">
       <font-awesome-icon
         v-show="todo.isDone === true"
@@ -10,12 +20,18 @@
         v-show="todo.isDone === false"
         :icon="['far', 'square']"
       />
-      <div :class="[todo.isDone === false ? 'text' : 'text completed']">
+      <div
+        v-show="!isEdit"
+        :class="[todo.isDone === false ? 'text' : 'text completed']"
+      >
         {{ todo.text }}
       </div>
-      <div class="remove" @click="onRemoveTodo">
-        <font-awesome-icon :icon="['fas', 'trash-can']" />
-      </div>
+    </div>
+    <div :class="[todo.isDone === false ? 'edit' : 'none']" @click="toggleEdit">
+      <font-awesome-icon :icon="['fas', 'pen']" />
+    </div>
+    <div class="remove" @click="onRemoveTodo">
+      <font-awesome-icon :icon="['fas', 'trash-can']" />
     </div>
   </div>
 </template>
@@ -26,12 +42,30 @@ export default {
   props: {
     todo: Object,
   },
+  data() {
+    return {
+      editText: '',
+      isEdit: false,
+    };
+  },
   methods: {
+    toggleEdit() {
+      this.isEdit = !this.isEdit;
+      const self = this;
+      setTimeout(function () {
+        self.$refs.editInput.focus();
+      }, 1);
+    },
     onRemoveTodo() {
       this.$emit('onRemoveTodo', this.todo.id);
     },
     onCheckTodo() {
       this.$emit('onCheckTodo', this.todo.id);
+    },
+    onEditTodo() {
+      this.$emit('onEditTodo', this.editText, this.todo.id);
+      this.editText = '';
+      this.isEdit = false;
     },
   },
 };
@@ -82,6 +116,39 @@ export default {
     cursor: pointer;
     &:hover {
       color: #ff8787;
+    }
+  }
+  .edit {
+    display: flex;
+    margin-right: 1.5rem;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #868e96;
+    cursor: pointer;
+    &:hover {
+      color: #ced4da;
+    }
+  }
+  .none {
+    display: none;
+  }
+  .edit-form {
+    position: absolute;
+    left: 9%;
+    z-index: 10;
+  }
+  .edit-input {
+    width: 24rem;
+    height: 2rem;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #adb5bd;
+    padding: 0.5rem;
+    padding-left: 0;
+    font-size: 1rem;
+    color: #868e96;
+    &:focus {
+      outline: none;
     }
   }
 }

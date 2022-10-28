@@ -5,6 +5,7 @@
       :todos="todos"
       @onRemoveTodo="removeTodo"
       @onCheckTodo="checkTodo"
+      @onEditTodo="editTodo"
     />
   </TodoTemplate>
 </template>
@@ -26,6 +27,7 @@ export default {
   data() {
     return {
       inputText: '',
+      editInput: '',
       todos: [],
     };
   },
@@ -52,6 +54,11 @@ export default {
     checkTodo(id) {
       this.todos = this.todos.map((todo) =>
         todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
+      );
+    },
+    editTodo(payload, id) {
+      this.todos = this.todos.map((todo) =>
+        todo.id === id ? { ...todo, text: payload } : todo,
       );
     },
   },

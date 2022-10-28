@@ -10,6 +10,7 @@
         :todo="todo"
         @onRemoveTodo="onRemoveTodo"
         @onCheckTodo="onCheckTodo"
+        @onEditTodo="onEditTodo"
       />
     </div>
   </div>
@@ -30,6 +31,9 @@ export default {
     },
     onCheckTodo(payload) {
       this.$emit('onCheckTodo', payload);
+    },
+    onEditTodo(payload, id) {
+      this.$emit('onEditTodo', payload, id);
     },
   },
 };
