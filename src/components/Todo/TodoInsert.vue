@@ -1,6 +1,12 @@
 <template>
-  <form class="todo-insert-form">
-    <input type="text" class="todo-input" placeholder="할 일을 입력해주세요" />
+  <form class="todo-insert-form" @submit.prevent="onAddTodo">
+    <input
+      type="text"
+      class="todo-input"
+      placeholder="할 일을 입력해주세요"
+      @input="onChangeField"
+      :value="input"
+    />
     <button class="add-button">
       <font-awesome-icon :icon="['fas', 'plus']" />
     </button>
@@ -10,6 +16,21 @@
 <script>
 export default {
   name: 'TodoInsert',
+  data() {
+    return {
+      input: '',
+    };
+  },
+  methods: {
+    onChangeField(e) {
+      this.input = e.target.value;
+      this.$emit('onChangeField', this.input);
+    },
+    onAddTodo() {
+      this.$emit('onAddTodo');
+      this.input = '';
+    },
+  },
 };
 </script>
 

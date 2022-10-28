@@ -1,7 +1,11 @@
 <template>
   <TodoTemplate>
-    <TodoInsert />
-    <TodoList :todos="todos" />
+    <TodoInsert @onChangeField="changeField" @onAddTodo="addTodo" />
+    <TodoList
+      :todos="todos"
+      @onRemoveTodo="removeTodo"
+      @onCheckTodo="checkTodo"
+    />
   </TodoTemplate>
 </template>
 
@@ -9,6 +13,8 @@
 import TodoTemplate from '@/components/Todo/TodoTemplate.vue';
 import TodoInsert from '@/components/Todo/TodoInsert.vue';
 import TodoList from '@/components/Todo/TodoList.vue';
+
+let nextId = 1;
 
 export default {
   name: 'TodoVue',
@@ -19,12 +25,31 @@ export default {
   },
   data() {
     return {
-      todos: [
-        { id: 1, text: '테스트용 입니다1.', isDone: false },
-        { id: 2, text: '테스트용 입니다2.', isDone: false },
-        { id: 3, text: '테스트용 입니다3.', isDone: false },
-      ],
+      inputText: '',
+      todos: [],
     };
+  },
+  methods: {
+    changeField(payload) {
+      this.inputText = payload;
+    },
+    addTodo() {
+      if (this.inputText.length === 0) {
+        alert('내용을 채워주세요!');
+      } else {
+        this.todos.push({ id: nextId, text: this.inputText, isDone: false });
+        nextId += 1;
+        this.inputText = '';
+      }
+    },
+    removeTodo(id) {
+      this.todos.filter((todo) => todo.id !== id);
+    },
+    checkTodo(id) {
+      this.todos.map((todo) =>
+        todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
+      );
+    },
   },
 };
 </script>
