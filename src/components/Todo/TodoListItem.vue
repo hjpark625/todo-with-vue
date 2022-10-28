@@ -1,9 +1,15 @@
 <template>
   <div class="todo-list-item-wrapper">
     <div class="checkbox">
-      <font-awesome-icon :icon="['fas', 'square-check']" />
-      <font-awesome-icon :icon="['far', 'square']" />
-      <div class="text">text</div>
+      <font-awesome-icon
+        v-show="todo.isDone === true"
+        :icon="['fas', 'square-check']"
+      />
+      <font-awesome-icon
+        v-show="todo.isDone === false"
+        :icon="['far', 'square']"
+      />
+      <div class="text">{{ todo.text }}</div>
       <div class="remove">
         <font-awesome-icon :icon="['fas', 'trash-can']" />
       </div>
@@ -12,7 +18,10 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'TodoListItem',
+  props: ['todo'],
+};
 </script>
 
 <style lang="scss">

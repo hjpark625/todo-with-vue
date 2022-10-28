@@ -1,7 +1,11 @@
 <template>
-  <!-- <div class="empty-todos">해야 할 일을 채워주세요!</div> -->
   <div class="todo-list-wrapper">
-    <TodoListItem />
+    <div v-if="todos.length === 0" class="empty-todos">
+      해야 할 일을 채워주세요!
+    </div>
+    <div v-else>
+      <TodoListItem v-for="todo in todos" :key="todo.id" :todo="todo" />
+    </div>
   </div>
 </template>
 
@@ -10,6 +14,7 @@ import TodoListItem from './TodoListItem.vue';
 
 export default {
   name: 'TodoList',
+  props: ['todos'],
   components: {
     TodoListItem,
   },

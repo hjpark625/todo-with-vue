@@ -1,7 +1,7 @@
 <template>
   <TodoTemplate>
     <TodoInsert />
-    <TodoList />
+    <TodoList :todos="todos" />
   </TodoTemplate>
 </template>
 
@@ -16,6 +16,15 @@ export default {
     TodoTemplate,
     TodoInsert,
     TodoList,
+  },
+  data() {
+    return {
+      todos: [
+        { id: 1, text: '테스트용 입니다1.', isDone: false },
+        { id: 2, text: '테스트용 입니다2.', isDone: false },
+        { id: 3, text: '테스트용 입니다3.', isDone: false },
+      ],
+    };
   },
 };
 </script>

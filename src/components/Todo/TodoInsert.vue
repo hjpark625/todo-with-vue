@@ -1,6 +1,6 @@
 <template>
   <form class="todo-insert-form">
-    <input type="text" class="todo-input" />
+    <input type="text" class="todo-input" placeholder="할 일을 입력해주세요" />
     <button class="add-button">
       <font-awesome-icon :icon="['fas', 'plus']" />
     </button>
