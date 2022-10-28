@@ -10,7 +10,7 @@
         :icon="['far', 'square']"
       />
       <div class="text">{{ todo.text }}</div>
-      <div class="remove">
+      <div class="remove" @click="onRemoveTodo">
         <font-awesome-icon :icon="['fas', 'trash-can']" />
       </div>
     </div>
@@ -20,7 +20,14 @@
 <script>
 export default {
   name: 'TodoListItem',
-  props: ['todo'],
+  props: {
+    todo: Object,
+  },
+  methods: {
+    onRemoveTodo() {
+      this.$emit('onRemoveTodo', this.todo.id);
+    },
+  },
 };
 </script>
 

@@ -37,13 +37,17 @@ export default {
       if (this.inputText.length === 0) {
         alert('내용을 채워주세요!');
       } else {
-        this.todos.push({ id: nextId, text: this.inputText, isDone: false });
+        this.todos = this.todos.concat({
+          id: nextId,
+          text: this.inputText,
+          isDone: false,
+        });
         nextId += 1;
         this.inputText = '';
       }
     },
     removeTodo(id) {
-      this.todos.filter((todo) => todo.id !== id);
+      this.todos = this.todos.filter((todo) => todo.id !== id);
     },
     checkTodo(id) {
       this.todos.map((todo) =>
@@ -53,5 +57,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
