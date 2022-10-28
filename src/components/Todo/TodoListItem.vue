@@ -63,9 +63,13 @@ export default {
       this.$emit('onCheckTodo', this.todo.id);
     },
     onEditTodo() {
-      this.$emit('onEditTodo', this.editText, this.todo.id);
-      this.editText = '';
-      this.isEdit = false;
+      if (this.editText.length === 0) {
+        alert('수정 할 내용을 입력해주세요');
+      } else {
+        this.$emit('onEditTodo', this.editText, this.todo.id);
+        this.editText = '';
+        this.isEdit = false;
+      }
     },
   },
 };
