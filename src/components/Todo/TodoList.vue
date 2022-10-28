@@ -9,6 +9,7 @@
         :key="todo.id"
         :todo="todo"
         @onRemoveTodo="onRemoveTodo"
+        @onCheckTodo="onCheckTodo"
       />
     </div>
   </div>
@@ -26,6 +27,9 @@ export default {
   methods: {
     onRemoveTodo(payload) {
       this.$emit('onRemoveTodo', payload);
+    },
+    onCheckTodo(payload) {
+      this.$emit('onCheckTodo', payload);
     },
   },
 };

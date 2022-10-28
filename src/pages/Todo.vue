@@ -50,7 +50,7 @@ export default {
       this.todos = this.todos.filter((todo) => todo.id !== id);
     },
     checkTodo(id) {
-      this.todos.map((todo) =>
+      this.todos = this.todos.map((todo) =>
         todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
       );
     },

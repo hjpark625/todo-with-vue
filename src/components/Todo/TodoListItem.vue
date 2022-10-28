@@ -1,15 +1,18 @@
 <template>
   <div class="todo-list-item-wrapper">
-    <div class="checkbox">
+    <div class="checkbox" @click="onCheckTodo">
       <font-awesome-icon
         v-show="todo.isDone === true"
         :icon="['fas', 'square-check']"
+        class="check"
       />
       <font-awesome-icon
         v-show="todo.isDone === false"
         :icon="['far', 'square']"
       />
-      <div class="text">{{ todo.text }}</div>
+      <div :class="[todo.isDone === false ? 'text' : 'text completed']">
+        {{ todo.text }}
+      </div>
       <div class="remove" @click="onRemoveTodo">
         <font-awesome-icon :icon="['fas', 'trash-can']" />
       </div>
@@ -26,6 +29,9 @@ export default {
   methods: {
     onRemoveTodo() {
       this.$emit('onRemoveTodo', this.todo.id);
+    },
+    onCheckTodo() {
+      this.$emit('onCheckTodo', this.todo.id);
     },
   },
 };
@@ -51,16 +57,21 @@ export default {
     align-items: center;
     svg {
       font-size: 1.5rem;
-      color: inherit;
+    }
+    .check {
+      color: #22b8cf;
     }
   }
 
   .text {
     margin-left: 0.5rem;
     flex: 1;
-
     color: inherit;
     text-decoration: none;
+  }
+  .completed {
+    text-decoration: line-through;
+    color: #adb5bd;
   }
 
   .remove {
