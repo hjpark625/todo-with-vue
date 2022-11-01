@@ -1,11 +1,11 @@
 <template>
-  <form class="todo-insert-form" @submit.prevent="onAddTodo">
+  <form class="todo-insert-form" @submit.prevent="addTodo">
     <input
       type="text"
       class="todo-input"
       placeholder="할 일을 입력해주세요"
-      @input="onChangeField"
-      :value="input"
+      @input="$store.commit('changeField', $event.target.value)"
+      :value="$store.state.todoInput"
     />
     <button class="add-button">
       <font-awesome-icon :icon="['fas', 'plus']" />
@@ -16,19 +16,13 @@
 <script>
 export default {
   name: 'TodoInsert',
-  data() {
-    return {
-      input: '',
-    };
-  },
   methods: {
-    onChangeField(e) {
-      this.input = e.target.value;
-      this.$emit('onChangeField', this.input);
-    },
-    onAddTodo() {
-      this.$emit('onAddTodo');
-      this.input = '';
+    addTodo() {
+      if (this.$store.state.todoInput.length === 0) {
+        alert('내용을 입력해주세요');
+      } else {
+        this.$store.commit('addTodo');
+      }
     },
   },
 };

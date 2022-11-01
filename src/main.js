@@ -6,11 +6,13 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import App from './App.vue';
 import router from './router';
+import store from './store/store';
 
 library.add(fas, far, fab);
 
 const app = createApp(App);
 
 app.use(router);
+app.use(store);
 app.component('font-awesome-icon', FontAwesomeIcon);
 app.mount('#app');

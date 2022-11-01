@@ -1,16 +1,17 @@
 <template>
   <div class="todo-list-item-wrapper">
-    <form v-show="isEdit" class="edit-form" @submit.prevent="onEditTodo">
+    <form v-show="isEdit" class="edit-form" @submit.prevent="editTodo(todo.id)">
       <input
         type="text"
         class="edit-input"
-        v-model="editText"
+        @input="$store.commit('editChange', $event.target.value)"
+        :value="$store.state.editInput"
         :placeholder="todo.text"
         ref="editInput"
       />
     </form>
 
-    <div class="checkbox" @click="onCheckTodo">
+    <div class="checkbox" @click="$store.commit('checkTodo', todo.id)">
       <font-awesome-icon
         v-show="todo.isDone === true"
         :icon="['fas', 'square-check']"
@@ -30,7 +31,7 @@
     <div :class="[todo.isDone === false ? 'edit' : 'none']" @click="toggleEdit">
       <font-awesome-icon :icon="['fas', 'pen']" />
     </div>
-    <div class="remove" @click="onRemoveTodo">
+    <div class="remove" @click="$store.commit('deleteTodo', todo.id)">
       <font-awesome-icon :icon="['fas', 'trash-can']" />
     </div>
   </div>
@@ -44,7 +45,6 @@ export default {
   },
   data() {
     return {
-      editText: '',
       isEdit: false,
     };
   },
@@ -56,18 +56,11 @@ export default {
         self.$refs.editInput.focus();
       }, 1);
     },
-    onRemoveTodo() {
-      this.$emit('onRemoveTodo', this.todo.id);
-    },
-    onCheckTodo() {
-      this.$emit('onCheckTodo', this.todo.id);
-    },
-    onEditTodo() {
-      if (this.editText.length === 0) {
+    editTodo(id) {
+      if (this.$store.state.editInput.length === 0) {
         alert('수정 할 내용을 입력해주세요');
       } else {
-        this.$emit('onEditTodo', this.editText, this.todo.id);
-        this.editText = '';
+        this.$store.commit('editTodo', id);
         this.isEdit = false;
       }
     },
