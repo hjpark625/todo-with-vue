@@ -4,14 +4,7 @@
       해야 할 일을 채워주세요!
     </div>
     <div v-else>
-      <TodoListItem
-        v-for="todo in todos"
-        :key="todo.id"
-        :todo="todo"
-        @onRemoveTodo="onRemoveTodo"
-        @onCheckTodo="onCheckTodo"
-        @onEditTodo="onEditTodo"
-      />
+      <TodoListItem v-for="todo in todos" :key="todo.id" :todo="todo" />
     </div>
   </div>
 </template>
@@ -21,20 +14,11 @@ import TodoListItem from './TodoListItem.vue';
 
 export default {
   name: 'TodoList',
-  props: ['todos'],
+  props: {
+    todos: Array,
+  },
   components: {
     TodoListItem,
-  },
-  methods: {
-    onRemoveTodo(payload) {
-      this.$emit('onRemoveTodo', payload);
-    },
-    onCheckTodo(payload) {
-      this.$emit('onCheckTodo', payload);
-    },
-    onEditTodo(payload, id) {
-      this.$emit('onEditTodo', payload, id);
-    },
   },
 };
 </script>
